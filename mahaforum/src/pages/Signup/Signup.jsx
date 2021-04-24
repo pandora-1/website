@@ -1,37 +1,65 @@
-import React from 'react'
-import {useMediaQuery} from 'react-responsive'
-import SignUpForm from '../../components/SignUpComponents/SignUpForm'
-import {ReactComponent as Hero} from '../../icons/auth.svg'
-// ResponsiveHooks
-const useScreen = () =>{
-    const isMinimalized = useMediaQuery({maxWidth:600});
-    if(isMinimalized){
-        return "minimalized"
-    }
-    return "fullscreen"
-}
+import React, { useState } from 'react'
+import {ReactComponent as Hero} from '../../icons/hero-signup.svg'
+import "./signup.css"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import app from "../../base";
+import { useHistory } from 'react-router';
 
 const Signup = () => {
-    var layout;
-    const screenType = useScreen();
-    if (screenType==="minimalized"){
-        layout = (
-            <>
-                <h1>MahaForum</h1>
-                <h2>Sign Up</h2>
-                <SignUpForm/>
-                <Hero/>
-            </>
-        )
-    } else {
-        layout = (
-            <h1>fullscreen</h1>
-        )
+    const history = useHistory()
+    const [email, setEmail] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
+    const [password, setPassword] = useState("")
+    const [fullname, setFullname] = useState("")
+    const handleSignUp = async event => {
+        event.preventDefault();
+        if(confirmPassword !== password){
+            alert("Password confirmation doesn't match!")
+            return;
+        }
+        try {
+          await app
+            .auth()
+            .createUserWithEmailAndPassword(email, password);
+          var user = app.auth().currentUser;
+          user.updateProfile({
+              displayName:fullname,
+          })
+          alert("Successfully created account!")
+          history.push("/login");
+        } catch (err) {
+            alert(err);
+        }
     }
-
     return (
         <div>
-            {layout}
+            <div className="row d-flex d-xl-flex">
+                <div className="col-lg-7">
+                    <Hero className="img-fluid"/>
+                </div>
+            <div className="col">
+            <h2 style={{textAlign: "center"}}>Signup</h2>
+            <form onSubmit={handleSignUp}>
+                <div className="form-group d-flex flex-column" style={{width:"65%"}}>
+                    <label className="text-muted">Fullname</label>
+                    <input onChange={e=>setFullname(e.target.value)} className="form-control" type="text" style={{borderRadius:"20px",border:"1px solid rgb(208,201,201)",height:"2.5rem"}}/></div>
+                <div className="form-group d-flex flex-column" style={{width:"65%",margin:"20px auto"}}>
+                    <label className="text-muted">Email</label>
+                    <input onChange={e=>setEmail(e.target.value)} className="form-control" type="email" style={{borderRadius:"205px"}}/>
+                </div>
+                <div className="form-group d-flex flex-column" style={{width:"65%",margin:"20px auto"}}>
+                    <label className="text-muted">Password</label>
+                    <input onChange={e=>setPassword(e.target.value)} className="form-control" type="password" style={{borderRadius:"205px"}}/>
+                </div>
+                <div className="form-group d-flex flex-column" style={{width:"65%",margin:"20px auto"}}>
+                    <label className="text-muted">Confirm password</label>
+                    <input onChange={e=>setConfirmPassword(e.target.value)} className="form-control" type="password" style={{borderRadius:"205px"}}/>
+                </div>
+                <button className="btn btn-block" type="submit" style={{color:"white",borderRadius:"20px",border:"1px solid rgb(208,201,201)",height:"2.5rem", width:"55%",backgroundColor:"#6C63FF",margin:"30px auto"}}>Signup</button>
+                <p style={{textAlign:"center"}}>Already have an account?<a href="#"> Login</a></p>
+            </form>
+        </div>
+    </div>
         </div>
     )
 }
