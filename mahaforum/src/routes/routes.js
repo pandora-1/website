@@ -14,6 +14,7 @@ const route = (label, path, component) => ({
 })
 
 // Bikin route
+/* export const LANDING_PAGE = route("Landing", "/landing",Landing ) */
 export const LOGIN_PAGE = route("Login","/login",Login)
 export const SIGNUP_PAGE = route("Signup","/signup",Signup)
 export const PROFILE_PAGE = route("Profile","/profile",Profile)
@@ -24,7 +25,6 @@ export const LANDING_PAGE = route('Home', '/', Landing)
 export const ABOUT_PAGE = route('About us', '/about', About)
 export const CONTACT_PAGE = route('Contact us', '/contact', Contact)
 
-
 // yang gak bisa diakses tanpa authentication
 export const AllPrivateRoutes = [
     PROFILE_PAGE
@@ -32,6 +32,7 @@ export const AllPrivateRoutes = [
 
 // yang bisa diakses tanpa authentication
 export const AllOpenRoutes = [
+    LANDING_PAGE,
     LOGIN_PAGE,
     SIGNUP_PAGE,
     ABOUT_PAGE,
@@ -42,4 +43,5 @@ export const NavbarRoutes = [
     LANDING_PAGE,
     ABOUT_PAGE,
     CONTACT_PAGE,
+
 ]
