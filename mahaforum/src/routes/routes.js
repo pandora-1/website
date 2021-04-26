@@ -34,6 +34,8 @@ export const AllPrivateRoutes = [
 export const AllOpenRoutes = [
     LOGIN_PAGE,
     SIGNUP_PAGE,
+    ABOUT_PAGE,
+    CONTACT_PAGE,
 ]
 
 export const NavbarRoutes = [
