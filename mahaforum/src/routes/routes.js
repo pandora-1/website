@@ -18,8 +18,8 @@ export const SIGNUP_PAGE = route("Signup","/signup",Signup)
 
 //Misal nanti ada page ini:
 export const LANDING_PAGE = route('Home', '/', Landing)
-export const ABOUT_PAGE = route('About', '/about', About)
-export const CONTACT_PAGE = route('Contact', '/contact', Contact)
+export const ABOUT_PAGE = route('About us', '/about', About)
+export const CONTACT_PAGE = route('Contact us', '/contact', Contact)
 
 
 // yang gak bisa diakses tanpa authentication
